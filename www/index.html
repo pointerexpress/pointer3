@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pointer Express</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="leaflet/leaflet.css" />
+        <script src="leaflet/leaflet.js"></script>
+
+        <script src="jquery/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+
+        <script>
+            var pathToDwrServlet = "http://mapas.pointer-express.com/pointer/dwr"; // Path to dwr on foreign domain
+            var pathBaseServlet = "http://mapas.pointer-express.com/"; // Ruta servidor principal
+        </script>
+        <script type='text/javascript' src='http://mapas.pointer-express.com/pointer/dwr/engine.js'></script>
+        <script type='text/javascript' src='http://mapas.pointer-express.com/pointer/dwr/interface/Server.js'></script>
+
+        <script src="proj4js/proj4js-combined.js"></script>  
+
+        <style>
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            html, body, #map, #lista {
+                height: 100%;
+            }
+            #lista {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                filter:alpha(opacity=90);
+                -moz-opacity:0.9;
+                -khtml-opacity: 0.9;
+                opacity: 0.9;
+                z-index: 10000;
+            }
+
+            .bticon {
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+
+        <div id="lista" style="display: none;overflow-y: auto">
+            <form role="form">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <span class="bticon col-sm-1" id="botonlista">
+                            <img src="leaflet/images/icon-back.png" 
+                                 style="padding-top: 5px;width: 41px; height: 41px;"/>
+                        </span>
+                        <input type="hidden" id="searchType" name="searchType" value="Address"/>
+                        <div class="btn-group col-sm-2">
+                            <button type="button" 
+                                    class="btn btn-default dropdown-toggle" 
+                                    data-toggle="dropdown" id="seleccionado">
+                                Direcci&oacute;n<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#" onclick="selecciona('Address')" id="Address">Direcci&oacute;n</a></li>
+                                <li><a href="#" onclick="selecciona('Building')" id="Building">Edif/Urb</a></li>
+                                <li><a href="#" onclick="selecciona('Roads')" id="Roads">Calle o Avenida</a></li>
+                                <li><a href="#" onclick="selecciona('Barrio')" id="Barrio">Barrio</a></li>
+                                <li><a href="#" onclick="selecciona('Business')" id="Business">Comercio</a></li>
+                                <li><a href="#" onclick="selecciona('Pointer')" id="Pointer">Pointer</a></li>
+                                <li><a href="#" onclick="selecciona('RUC')" id="RUC">RUC</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-2" >
+                            <input type="text" class="form-control"  name="query" id="query" value="" placeholder="Busqueda"/>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">	
+                        <div class="progress" id="progreso">
+                            <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only">Buscando...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-10">	
+                        <ul id="search_results"  class="list-group"></ul>
+                    </div>
+                </div>
+        </div>
+        <script src="js/pointer.js"></script>
+        <script src="js/busqueda.js"></script>
+        <script src="js/s2config.js"></script>
+
+        <script src="js/s2.js"></script>
+
+        <script>
+
+            $(function() {
+                $("#progreso").hide();
+                $("#lista").hide();
+                $("#botonmenu").click(function() {
+                    $("#lista").toggle();
+                    //	$("#map").toggle();
+                });
+                $("#botonlista").click(function() {
+                    $("#lista").toggle();
+                    //	$("#map").toggle();
+                });
+
+            });
+
+        </script>
+    </body>
+</html>
